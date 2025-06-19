@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend import analyze  # Make sure analyze.py has `router = APIRouter()`
+from backend import analyze  # Make sure backend/analyze.py exists and has `router = APIRouter()`
 
 app = FastAPI(
     title="OGPW Packet Analyzer API",
@@ -8,24 +8,22 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Allow frontend (e.g., Streamlit) to access backend
+# CORS configuration to allow frontend to access the backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For production, set this to your frontend domain
+    allow_origins=["*"],  # For production, replace with actual frontend origin
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include routes from analyze.py
+# Route inclusion from analyze.py
 app.include_router(analyze.router, prefix="/api")
 
-# Optional: a health check route
 @app.get("/")
 def root():
     return {"message": "OGPW backend is up and running!"}
 
-# Optional: enable direct running
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
