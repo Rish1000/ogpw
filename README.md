@@ -7,13 +7,18 @@ OGPW (Open Graph Packet Watcher)
 Features
 
 Upload and analyze .pcap files
+
 Streamlit UI for visualization
+
 FastAPI backend for processing
 
 
 Setup
 
 Clone the repo
+
 pip install -r requirements.txt
+
 Run backend: uvicorn backend.main:app --reload
+
 Run frontend: streamlit run frontend/app.py
